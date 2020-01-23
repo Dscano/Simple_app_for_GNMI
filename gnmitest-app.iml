@@ -85,20 +85,16 @@
     <orderEntry type="library" name="Maven: io.netty:netty:3.10.5.Final" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.onosproject:onlab-osgi:2.3.0-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.onosproject:onlab-misc:2.3.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.onosproject:onos-protocols-gnmi-api:2.3.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.onosproject:onos-protocols-grpc-api:2.3.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.onosproject:io_grpc_grpc_api_context:2.3.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.onosproject:onos-protocols-grpc-utils:2.3.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.onosproject:onos-drivers-gnmi:2.3.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.onosproject:com_google_protobuf_protobuf_java:2.3.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.onosproject:io_grpc_grpc_netty:2.3.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.onosproject:io_grpc_grpc_stub:2.3.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.onosproject:onos-core-serializers:2.3.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.onosproject:onos-protocols-gnmi-stub:2.3.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.onosproject:com_google_protobuf_protobuf_java:2.3.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.onosproject:io_grpc_grpc_stub:2.3.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.onosproject:io_grpc_grpc_protobuf:2.3.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: javax.annotation:javax.annotation-api:1.3" level="project" />
     <orderEntry type="library" name="Maven: com.google.api.grpc:proto-google-common-protos:1.12.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.5.1" level="project" />
-    <orderEntry type="library" name="Maven: org.onosproject:onos-protocols-gnmi-api:2.3.0-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.google.guava:guava:22.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.google.errorprone:error_prone_annotations:2.0.18" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.google.j2objc:j2objc-annotations:1.1" level="project" />
