@@ -16,17 +16,17 @@
 package org.gnmitest.app;
 
 import com.google.common.util.concurrent.Futures;
-import org.onosproject.net.Port;
-import org.onosproject.net.PortNumber;
+//import org.onosproject.net.Port;
+//import org.onosproject.net.PortNumber;
 import org.onosproject.net.device.DeviceService;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
-import gnmi.Gnmi.SubscriptionList;
-import gnmi.Gnmi.SubscriptionMode;
-import gnmi.Gnmi.Subscription;
+//import gnmi.Gnmi.SubscriptionList;
+//import gnmi.Gnmi.SubscriptionMode;
+//import gnmi.Gnmi.Subscription;
 import gnmi.Gnmi;
 import gnmi.Gnmi.GetRequest;
 import gnmi.Gnmi.Path;
@@ -39,8 +39,8 @@ import org.onosproject.gnmi.api.GnmiEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Set;
-import java.util.stream.Collectors;
+//import java.util.Set;
+//import java.util.stream.Collectors;
 
 /**
  * Skeletal ONOS application component.
@@ -61,16 +61,20 @@ public final class Testgnmi {
     private GnmiEventListener deviceListener = new InnerDeviceListener();
 
 
-    private static final GetRequest GET = GetRequest.newBuilder().addPath(
-            Path.newBuilder().addElem(
-                    Gnmi.PathElem.newBuilder().setName("/interfaces/interface[name=s1-eth1]/config/").build()
-            ).build()).build();
-
     Path path = Path.newBuilder()
             .addElem(Gnmi.PathElem.newBuilder().setName("interfaces").build())
             .addElem(Gnmi.PathElem.newBuilder().setName("interface").putKey("name", "s1-eth1").build())
             .addElem(Gnmi.PathElem.newBuilder().setName("state").build())
+            .addElem(Gnmi.PathElem.newBuilder().setName("oper-status").build())
             .build();
+
+    Path qos = Path.newBuilder()
+            .build();
+
+    Path comp = Path.newBuilder()
+            .addElem(Gnmi.PathElem.newBuilder().setName("components").build())
+            .build();
+
 
     @Activate
     public void activate() {
@@ -83,11 +87,29 @@ public final class Testgnmi {
         // indagare meglio
         GetRequest request = GetRequest.newBuilder()
                 .addPath(path)
+                //.setType(GetRequest.DataType.ALL)
+                .setType(GetRequest.DataType.CONFIG)
+                .setEncoding(Gnmi.Encoding.PROTO)
+                .build();
+
+        log.info("NEW PATH" + Futures.getUnchecked(gnmiClient.get(request)).toString());
+
+        GetRequest requestplat = GetRequest.newBuilder()
+                .addPath(comp)
                 .setType(GetRequest.DataType.ALL)
                 .setEncoding(Gnmi.Encoding.PROTO)
                 .build();
 
-        //log.info("NEW PATH" + Futures.getUnchecked(gnmiClient.get(request)).toString());
+        log.info("NEW PATH COMP" + Futures.getUnchecked(gnmiClient.get(requestplat)).toString());
+
+        GetRequest requestqos = GetRequest.newBuilder()
+                .addPath(qos)
+                .setType(GetRequest.DataType.CONFIG)
+                .setEncoding(Gnmi.Encoding.PROTO)
+                .build();
+
+        log.info("NEW PATH QOS" + Futures.getUnchecked(gnmiClient.get(requestqos)).toString());
+
 
         //log.info("CAPABILITIES" + Futures.getUnchecked(gnmiClient.capabilities()).toString());
 
@@ -101,44 +123,31 @@ public final class Testgnmi {
         log.info("CAPABILITIES gnmi version" + Futures.getUnchecked(gnmiClient.capabilities())
                 .getGNMIVersion());
 
-
-        Path patht = Path.newBuilder()
-                .addElem(Gnmi.PathElem.newBuilder().setName("interfaces").build())
-                .addElem(Gnmi.PathElem.newBuilder().setName("interface").putKey("name", "s1-eth1").build())
-                .build();
-    /*
-        GetRequest requestt = GetRequest.newBuilder()
-                .addPath(patht)
-                .setType(GetRequest.DataType.valueOf( "s1-eth1"))
-                .setEncoding(Gnmi.Encoding.PROTO)
-                .build();
-*/
-        //log.info(" PATH 2" + Futures.getUnchecked(gnmiClient.get(requestt)).toString());
-
         /**
          * Subscription code non serve perchè c'è già di partenza
          */
-
+        /*
         Set<PortNumber> ports = deviceService.getPorts(deviceId).stream()
                 .map(Port::number)
                 .collect(Collectors.toSet());
 
-        log.info("porte" + ports.toString() + ports.iterator().next().name());
+       //log.info("porte" + ports.toString() + ports.iterator().next().name());
+
         SubscriptionList subscriptionList = SubscriptionList.newBuilder()
                 .setMode(SubscriptionList.Mode.POLL)
-                //.setUpdatesOnly(true)
-                /*.addAllSubscription(ports.stream().map(
+                .setUpdatesOnly(true)
+                .addAllSubscription(ports.stream().map(
                         port -> Subscription.newBuilder()
                                 .setPath(interfaceOperStatusPath(port.name()))
                                 .setMode(SubscriptionMode.SAMPLE)
-                                .build()).collect(Collectors.toList()))*/
-                .addSubscription(Subscription.newBuilder().setPath(interfaceOperStatusPath("s1-eth1"))
-                .setMode(SubscriptionMode.SAMPLE))
+                                .build()).collect(Collectors.toList()))
+                //.addSubscription(Subscription.newBuilder().setPath(interfaceOperStatusPath("s1-eth1"))
+                //.setMode(SubscriptionMode.SAMPLE))
                 .build();
 
-        log.info("sub" + subscriptionList.toString());
+        //log.info("sub" + subscriptionList.toString());
 
-        /*gnmiController.get(deviceId).subscribe(
+        gnmiController.get(deviceId).subscribe(
                 SubscribeRequest.newBuilder()
                         .setSubscribe(subscriptionList)
                         .build());*/
