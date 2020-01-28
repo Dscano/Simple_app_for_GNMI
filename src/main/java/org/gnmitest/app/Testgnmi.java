@@ -29,7 +29,10 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 //import gnmi.Gnmi.Subscription;
 import gnmi.Gnmi;
 import gnmi.Gnmi.GetRequest;
+import gnmi.Gnmi.SetRequest;
 import gnmi.Gnmi.Path;
+import gnmi.Gnmi.Update;
+import gnmi.Gnmi.TypedValue;
 //import gnmi.Gnmi.SubscribeRequest;
 import org.onosproject.gnmi.api.GnmiClient;
 import org.onosproject.gnmi.api.GnmiController;
@@ -122,32 +125,42 @@ public final class Testgnmi {
                 .getExtensionList().toString());
         log.info("CAPABILITIES gnmi version" + Futures.getUnchecked(gnmiClient.capabilities())
                 .getGNMIVersion());
+        /* ok ma campo selezionato non scrivibile
+        SetRequest set = SetRequest.newBuilder()
+                .addUpdate(Update.newBuilder().
+                        setPath(path).setVal(TypedValue.newBuilder().setStringVal("3").build())).build();
 
+        gnmiClient.set(set);
+        */
         /**
          * Subscription code non serve perchè c'è già di partenza
          */
-        /*
-        Set<PortNumber> ports = deviceService.getPorts(deviceId).stream()
+
+        /*Set<PortNumber> ports = deviceService.getPorts(deviceId).stream()
                 .map(Port::number)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toSet());*/
 
        //log.info("porte" + ports.toString() + ports.iterator().next().name());
+        /*
+        gnmiController.get(deviceId).unsubscribe();
 
         SubscriptionList subscriptionList = SubscriptionList.newBuilder()
-                .setMode(SubscriptionList.Mode.POLL)
+                .setMode(SubscriptionList.Mode.STREAM)
                 .setUpdatesOnly(true)
-                .addAllSubscription(ports.stream().map(
+               /* .addAllSubscription(ports.stream().map(
                         port -> Subscription.newBuilder()
                                 .setPath(interfaceOperStatusPath(port.name()))
                                 .setMode(SubscriptionMode.SAMPLE)
                                 .build()).collect(Collectors.toList()))
-                //.addSubscription(Subscription.newBuilder().setPath(interfaceOperStatusPath("s1-eth1"))
-                //.setMode(SubscriptionMode.SAMPLE))
-                .build();
 
+
+                .addSubscription(Subscription.newBuilder().setPath(comp)
+                .setMode(SubscriptionMode.ON_CHANGE))
+                .build();
+        */
         //log.info("sub" + subscriptionList.toString());
 
-        gnmiController.get(deviceId).subscribe(
+        /*gnmiController.get(deviceId).subscribe(
                 SubscribeRequest.newBuilder()
                         .setSubscribe(subscriptionList)
                         .build());*/
